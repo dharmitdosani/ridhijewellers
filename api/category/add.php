@@ -49,6 +49,5 @@ else {
 
 	//tell the user
 	echo json_encode(array("message" => "Unable to create category. Data provided is insufficient"));
-
 }
 ?>

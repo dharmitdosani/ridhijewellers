@@ -14,11 +14,13 @@ class Category {
 		$this->conn = $db;
 	}
 
+	//insert one category into the table
 	public function insert() {
-
+		//making the category name safe for the query
 		$this->category_name = htmlspecialchars($this->category_name);
 		$this->category_name = mysqli_real_escape_string($this->conn,$this->category_name);
 
+		//query processing
 		$query = "INSERT INTO " . $this->table_name . "(category_name) VALUES(?)";
 		$stmt = $this->conn->prepare($query);
 		$stmt->bind_param("s",$this->category_name);
@@ -29,7 +31,15 @@ class Category {
 		else {
 			return false;
 		}
+	}
 
+	//reading all the categories from the table
+	public function read() {
+		//query processing
+		$query = "SELECT * FROM " . $this->table_name;
+		$stmt = $this->conn->query($query);
+		// $stmt->execute();
+		return $stmt;
 	}
 }
 ?>
