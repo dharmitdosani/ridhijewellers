@@ -29,7 +29,7 @@ if(!empty($data->category_name)) {
 		http_response_code(201);
 		
 		//tell the user
-		echo json_encode(array("message" => "Category was created successfully"));
+		echo json_encode(array("message" => "Category was created successfully."));
 	}
 	else {
 
@@ -37,7 +37,7 @@ if(!empty($data->category_name)) {
 		http_response_code(503);
 		
 		//tell the user
-		echo json_encode(array("message" => "Unable to create category"));
+		echo json_encode(array("message" => "Unable to create category."));
 	}
 }
 
@@ -48,6 +48,6 @@ else {
 	http_response_code(400);
 
 	//tell the user
-	echo json_encode(array("message" => "Unable to create category. Data provided is insufficient"));
+	echo json_encode(array("message" => "Unable to create category. Data provided is insufficient."));
 }
 ?>
