@@ -68,5 +68,21 @@ class User {
 			return true;
 		}
 	}
+
+	// verifying user
+	public function verify_user() {
+		//verifying the user from the admin console
+		$this->user_name = mysqli_real_escape_string($this->conn, htmlspecialchars($this->user_name));
+		$query = "UPDATE " . $this->table_name . " SET status = 'verified' WHERE user_name = ?";
+		$stmt = $this->conn->prepare($query);
+		$stmt->bind_param("s",$this->user_name);
+
+		if($stmt->execute() && $stmt->affected_rows == 1) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 }
 ?>
