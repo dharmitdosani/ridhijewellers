@@ -50,10 +50,10 @@ class User {
 		$query = "SELECT user_name FROM " . $this->table_name;
 		$stmt = $this->conn->query($query);
 		$num = $stmt->num_rows;
-		//if the number of users are more than one
+		// if the number of users are more than one
 		if($num>0) {
 			$user_name_array = array();
-			//fetching usernames from the array
+			// fetching usernames from the array
 			while($row = $stmt->fetch_assoc()) {
 				array_push($user_name_array, strtolower($row["user_name"]));
 			}
@@ -71,7 +71,7 @@ class User {
 
 	// verifying user
 	public function verify_user() {
-		//verifying the user from the admin console
+		// verifying the user from the admin console
 		$this->user_name = mysqli_real_escape_string($this->conn, htmlspecialchars($this->user_name));
 		$query = "UPDATE " . $this->table_name . " SET status = 'verified' WHERE user_name = ?";
 		$stmt = $this->conn->prepare($query);
@@ -84,5 +84,21 @@ class User {
 			return false;
 		}
 	}
+
+	// deactivating user 
+	public function deactivate_user() {
+		// deactivating the user from the admin console
+		$this->user_name = mysqli_real_escape_string($this->conn, htmlspecialchars($this->user_name));
+		$query = "UPDATE " . $this->table_name . " SET status = 'not_verified' WHERE user_name = ?";
+		$stmt = $this->conn->prepare($query);
+		$stmt->bind_param("s",$this->user_name);
+
+		if($stmt->execute() && $stmt->affected_rows == 1) {
+			return true;
+		}
+		else {
+			return false;
+		}	
+	}	
 }
 ?>
