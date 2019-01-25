@@ -108,5 +108,32 @@ class User {
 		$stmt = $this->conn->query($query);
 		return $stmt;
 	}
+
+	// authenticate user
+	public function authenticate_user() {
+
+	}
+
+	// edit user profile
+	public function edit_profile() {
+		// edit user profile 
+		$this->user_name = mysqli_real_escape_string($this->conn, htmlspecialchars($this->user_name));
+		$this->contact_name = mysqli_real_escape_string($this->conn, htmlspecialchars($this->contact_name));
+		$this->contact_number = mysqli_real_escape_string($this->conn, htmlspecialchars($this->contact_number));
+		$this->address = mysqli_real_escape_string($this->conn, htmlspecialchars($this->address));
+
+		// query processing
+		$query = "UPDATE " . $this->table_name . " SET contact_name = ?, contact_number = ?, address = ? WHERE user_name = ?";
+		$stmt = $this->conn->prepare($query);
+		$stmt->bind_param("ssss", $this->contact_name, $this->contact_number, $this->address, $this->user_name);
+
+		if($stmt->execute() && $stmt->affected_rows == 1) {
+			return true;
+		}
+		else {
+			return false;
+		}
+
+	}
 }
 ?>
