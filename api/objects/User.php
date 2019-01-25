@@ -99,6 +99,14 @@ class User {
 		else {
 			return false;
 		}	
-	}	
+	}
+
+	// get all users
+	public function get_all_users() {
+		//query processing
+		$query = "SELECT * FROM " . $this->table_name;
+		$stmt = $this->conn->query($query);
+		return $stmt;
+	}
 }
 ?>

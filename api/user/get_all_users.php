@@ -8,37 +8,42 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 // required files
 include_once "../config/Database.php";
-include_once "../objects/Category.php";
+include_once "../objects/User.php";
 
 $database = new Database();
 $db = $database->getConnection();
 
-$category = new Category($db);
+$user = new User($db);
 
 //query all categories
-$stmt = $category->read();
+$stmt = $user->get_all_users();
 $num = $stmt->num_rows;
 
 //if the number of categories are more than one
 if($num>0) {
-	$categories_array = array();
-	$categories_array["records"] = array();
+	$users_array = array();
+	$users_array["records"] = array();
 
 	//fetching categories from the array
 	while($row = $stmt->fetch_assoc()) {
 		extract($row);
-		$category_item = array(
-			"category_id" => $category_id,
-			"category_name" => $category_name
+		$user_item = array(
+			"user_id" => $user_id,
+			"user_name" => $user_name,
+			"shop_name" => $shop_name,
+			"contact_name" => $contact_name,
+			"contact_number" => $contact_number,
+			"address" => $address,
+			"status" => $status
 		);
-		array_push($categories_array["records"], $category_item);
+		array_push($users_array["records"], $user_item);
 	}
 
 	// setting response code - 200 OK
 	http_response_code(200);
 
 	//show categories in json format
-	echo json_encode($categories_array);
+	echo json_encode($users_array);
 }
 else {
 	// setting response code - 404 not found
@@ -47,5 +52,4 @@ else {
 	// tell the user
 	echo json_encode(array("message" => "No categories found."));
 }
-
 ?>
