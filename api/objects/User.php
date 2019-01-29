@@ -109,11 +109,6 @@ class User {
 		return $stmt;
 	}
 
-	// authenticate user
-	public function authenticate_user() {
-
-	}
-
 	// edit user profile
 	public function edit_profile() {
 		// edit user profile 
@@ -133,7 +128,19 @@ class User {
 		else {
 			return false;
 		}
+	}
 
+	// authenticate user
+	public function authenticate_user() {
+		// taking username and password and authenticating the user
+		$this->user_name = mysqli_real_escape_string($this->conn, htmlspecialchars($this->user_name));
+		$this->user_password = mysqli_real_escape_string($this->conn, htmlspecialchars($this->user_password));
+
+		$query = "SELECT user_password FROM " . $this->table_name . " WHERE user_name = ?";
+		$stmt = $this->conn->prepare($query);
+		$stmt->bind_param("s",$this->user_name);
+		$stmt->execute();
+		return $stmt->get_result();
 	}
 }
 ?>
