@@ -34,17 +34,14 @@ if(!empty($data->user_name) && !empty($data->user_password) && !empty($data->sho
 
 		if($user->create_user()) {
 
-			// set response code - 201 created
+			// set response code - 201 created and tell the user
 			http_response_code(201);
-
-			// tell the user
 			echo json_encode(array("message" => "User successfully created."));
 		}
 		else {
-			// set response code - 503 service unavailable
-			http_response_code(503);
 
-			// tell the user
+			// set response code - 503 service unavailable and tell the user
+			http_response_code(503);
 			echo json_encode(array("message" => "Unable to create user."));	
 		}
 	}
@@ -52,20 +49,17 @@ if(!empty($data->user_name) && !empty($data->user_password) && !empty($data->sho
 	// user already exists
 	else {
 
-		// set response code - 409 conflict
+		// set response code - 409 conflict and tell the user
 		http_response_code(409);
-
-		// tell the user
 		echo json_encode(array("message" => "User name already exists."));
 	}
 }
+
 //tell the user that the data is incomplete
 else {
 
-	// set response code to 400 bad request
+	// set response code to 400 bad request and tell the user
 	http_response_code(400);
-
-	// tell the user
 	echo json_encode(array("message" => "Unable to create user. Data provided is insufficient."));
 }
 ?>

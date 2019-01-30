@@ -24,19 +24,23 @@ if(!empty($data->user_name) && !empty($data->user_password)) {
 	$stmt = $user->authenticate_user();
 	$row = $stmt->fetch_assoc();
 	extract($row);
+	
 	// to check whether the password entered by the user matches with the one saved in the database
 	if(strcmp($user_password, $user->user_password) == 0) {
+		
 		// setting response code - 200 OK and telling the user
 		http_response_code(200);
 		echo json_encode(array("message" => "Login Successful"));
 	}
 	else {
+		
 		// setting response code - 401 Unauthorized and tell the user
 		http_response_code(401);
 		echo json_encode(array("message" => "Username or password incorrect."));
 	}
 }
 else {
+	
 	// setting response code - 400 bad request and telling the user
 	http_response_code(400);
 	echo json_encode(array("message" => "Insufficient data to authenticate user."));

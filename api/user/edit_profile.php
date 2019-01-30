@@ -41,6 +41,7 @@ if(!empty($data->user_name) && !empty($data->contact_name) && !empty($data->cont
 		echo json_encode(array("message" => "Unable to update user profile. Service unavailable."));
 	}
 }
+
 // data incomplete
 else {
 

@@ -20,34 +20,28 @@ $data = json_decode(file_get_contents("php://input"));
 
 //checking if the data exists
 if(!empty($data->category_name)) {
-
+	
 	//set data into the category variables
 	$category->category_name = $data->category_name;
 	if($category->insert()) {
-
-		//set response code 201 created
-		http_response_code(201);
 		
-		//tell the user
+		//set response code 201 created and tell the user
+		http_response_code(201);
 		echo json_encode(array("message" => "Category was created successfully."));
 	}
 	else {
-
-		//set response code 503 service unavailable
-		http_response_code(503);
 		
-		//tell the user
+		//set response code 503 service unavailable and tell the user
+		http_response_code(503);
 		echo json_encode(array("message" => "Unable to create category."));
 	}
 }
 
 //tell the user that the data is incomplete
 else {
-
-	//set response code to 400 bad request
+	
+	//set response code to 400 bad request ans tell the user
 	http_response_code(400);
-
-	//tell the user
 	echo json_encode(array("message" => "Unable to create category. Data provided is insufficient."));
 }
 ?>

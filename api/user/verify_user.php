@@ -22,33 +22,29 @@ $data = json_decode(file_get_contents("php://input"));
 if(!empty($data->user_name)) {
 
 	$user->user_name = $data->user_name;
+
 	// verify user
 	if($user->verify_user()) {
 
-		// setting response code - 200 OK
+		// setting response code - 200 OK and tell the user
 		http_response_code(200);
-
-		// tell the user 
 		echo json_encode(array("message" => "User verified."));
 	}
+
 	// unable to process request
 	else {
 
-		// setting response code - 503 server unavailable
+		// setting response code - 503 server unavailable and tell the user
 		http_response_code(503);
-
-		// tell the user 
 		echo json_encode(array("message" => "Unable to verify user."));
 	}
 }
+
 // data incomplete
 else {
 	
-	// setting response code - 400 bad request
+	// setting response code - 400 bad request and tell the user
 	http_response_code(400);
-
-	// tell the user 
 	echo json_encode(array("message" => "Unable to verify user. Data provided is insufficient."));
 }
-
 ?>

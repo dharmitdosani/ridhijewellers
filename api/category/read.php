@@ -23,7 +23,7 @@ $num = $stmt->num_rows;
 if($num>0) {
 	$categories_array = array();
 	$categories_array["records"] = array();
-
+	
 	//fetching categories from the array
 	while($row = $stmt->fetch_assoc()) {
 		extract($row);
@@ -33,19 +33,17 @@ if($num>0) {
 		);
 		array_push($categories_array["records"], $category_item);
 	}
-
+	
 	// setting response code - 200 OK
 	http_response_code(200);
-
+	
 	//show categories in json format
 	echo json_encode($categories_array);
 }
 else {
-	// setting response code - 404 not found
+	
+	// setting response code - 404 not found and tell the user
 	http_response_code(404);
-
-	// tell the user
 	echo json_encode(array("message" => "No categories found."));
 }
-
 ?>

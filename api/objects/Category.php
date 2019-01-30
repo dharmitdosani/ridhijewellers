@@ -33,9 +33,11 @@ class Category {
 
 	// reading all the categories from the table
 	public function read() {
+		
 		// query processing
 		$query = "SELECT * FROM " . $this->table_name;
 		$stmt = $this->conn->query($query);
+		
 		// $stmt->execute(); // yeh use nahi karna hai
 		return $stmt;
 	}

@@ -1,6 +1,7 @@
 <?php
 
 class User {
+	
 	// database connection and table name
 	private $conn;
 	private $table_name = "users";
@@ -22,8 +23,10 @@ class User {
 
 	// create user
 	public function create_user() {
+		
 		// making the variables safe for the query
 		$this->user_name = mysqli_real_escape_string($this->conn, htmlspecialchars($this->user_name));
+		
 		// check for what to do for password encryption
 		$this->user_password = mysqli_real_escape_string($this->conn, htmlspecialchars($this->user_password));
 		$this->shop_name = mysqli_real_escape_string($this->conn, htmlspecialchars($this->shop_name));
@@ -50,9 +53,11 @@ class User {
 		$query = "SELECT user_name FROM " . $this->table_name;
 		$stmt = $this->conn->query($query);
 		$num = $stmt->num_rows;
+		
 		// if the number of users are more than one
 		if($num>0) {
 			$user_name_array = array();
+			
 			// fetching usernames from the array
 			while($row = $stmt->fetch_assoc()) {
 				array_push($user_name_array, strtolower($row["user_name"]));
@@ -71,6 +76,7 @@ class User {
 
 	// verifying user
 	public function verify_user() {
+		
 		// verifying the user from the admin console
 		$this->user_name = mysqli_real_escape_string($this->conn, htmlspecialchars($this->user_name));
 		$query = "UPDATE " . $this->table_name . " SET status = 'verified' WHERE user_name = ?";
@@ -87,6 +93,7 @@ class User {
 
 	// deactivating user 
 	public function deactivate_user() {
+		
 		// deactivating the user from the admin console
 		$this->user_name = mysqli_real_escape_string($this->conn, htmlspecialchars($this->user_name));
 		$query = "UPDATE " . $this->table_name . " SET status = 'not_verified' WHERE user_name = ?";
@@ -103,6 +110,7 @@ class User {
 
 	// get all users
 	public function get_all_users() {
+		
 		//query processing
 		$query = "SELECT * FROM " . $this->table_name;
 		$stmt = $this->conn->query($query);
@@ -111,6 +119,7 @@ class User {
 
 	// edit user profile
 	public function edit_profile() {
+		
 		// edit user profile 
 		$this->user_name = mysqli_real_escape_string($this->conn, htmlspecialchars($this->user_name));
 		$this->contact_name = mysqli_real_escape_string($this->conn, htmlspecialchars($this->contact_name));
@@ -132,6 +141,7 @@ class User {
 
 	// authenticate user
 	public function authenticate_user() {
+		
 		// taking username and password and authenticating the user
 		$this->user_name = mysqli_real_escape_string($this->conn, htmlspecialchars($this->user_name));
 		$this->user_password = mysqli_real_escape_string($this->conn, htmlspecialchars($this->user_password));
@@ -141,6 +151,25 @@ class User {
 		$stmt->bind_param("s",$this->user_name);
 		$stmt->execute();
 		return $stmt->get_result();
+	}
+
+	// resetting password
+	public function reset_password() {
+		
+		// taking the username whose password needs to be resetted
+		$this->user_name = mysqli_real_escape_string($this->conn, htmlspecialchars($this->user_name));
+		$new_password = "abcd@1234";
+
+		$query = "UPDATE " . $this->table_name . " SET user_password = ? WHERE user_name = ?";
+		$stmt = $this->conn->prepare($query);
+		$stmt->bind_param("ss", $new_password, $this->user_name);
+
+		if($stmt->execute() && $stmt->affected_rows == 1) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 }
 ?>
