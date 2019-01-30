@@ -171,5 +171,24 @@ class User {
 			return false;
 		}
 	}
+
+	// change password
+	public function change_password() {
+
+		// taking the user name old password and new password
+		$this->user_name = mysqli_real_escape_string($this->conn, htmlspecialchars($this->user_name));
+		$this->user_password = mysqli_real_escape_string($this->conn, htmlspecialchars($this->user_password));
+
+		$query = "UPDATE " . $this->table_name . " SET user_password = ? WHERE user_name = ?";
+		$stmt = $this->conn->prepare($query);
+		$stmt->bind_param("ss", $this->user_password, $this->user_name);
+
+		if($stmt->execute() && $stmt->affected_rows == 1) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 }
 ?>

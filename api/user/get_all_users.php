@@ -46,6 +46,7 @@ if($num>0) {
 	echo json_encode($users_array);
 }
 else {
+	
 	// setting response code - 404 not found and tell the user
 	http_response_code(404);
 	echo json_encode(array("message" => "No categories found."));
