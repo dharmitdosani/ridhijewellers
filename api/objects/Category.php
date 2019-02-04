@@ -14,7 +14,7 @@ class Category {
 	}
 
 	// insert one category into the table
-	public function insert() {
+	public function add_category() {
 		// making the category name safe for the query
 		$this->category_name = mysqli_real_escape_string($this->conn, htmlspecialchars($this->category_name));
 
@@ -32,7 +32,7 @@ class Category {
 	}
 
 	// reading all the categories from the table
-	public function read() {
+	public function read_all_categories() {
 		
 		// query processing
 		$query = "SELECT * FROM " . $this->table_name;

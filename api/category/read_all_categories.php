@@ -16,7 +16,7 @@ $db = $database->getConnection();
 $category = new Category($db);
 
 //query all categories
-$stmt = $category->read();
+$stmt = $category->read_all_categories();
 $num = $stmt->num_rows;
 
 //if the number of categories are more than one

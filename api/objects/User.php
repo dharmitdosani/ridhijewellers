@@ -1,5 +1,4 @@
 <?php
-
 class User {
 	
 	// database connection and table name
@@ -26,7 +25,6 @@ class User {
 		
 		// making the variables safe for the query
 		$this->user_name = mysqli_real_escape_string($this->conn, htmlspecialchars($this->user_name));
-		
 		// check for what to do for password encryption
 		$this->user_password = mysqli_real_escape_string($this->conn, htmlspecialchars($this->user_password));
 		$this->shop_name = mysqli_real_escape_string($this->conn, htmlspecialchars($this->shop_name));
