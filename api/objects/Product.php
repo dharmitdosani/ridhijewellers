@@ -66,5 +66,24 @@ class Product {
 			return false;
 		}
 	}
+
+	// deactivate a product
+	public function deactivate_product() {
+
+		// making variable safe for query processing
+		$this->product_code = mysqli_real_escape_string($this->conn, htmlspecialchars($this->product_code));
+		$this->status = "inactive";
+
+		// query processing
+		$query = "UPDATE " . $this->table_name . " SET status = ? WHERE product_code = ?";
+		$stmt = $this->conn->prepare($query);
+		$stmt->bind_param("si", $this->status, $this->product_code);
+		if($stmt->execute() && $stmt->affected_rows == 1) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 }
 ?>
