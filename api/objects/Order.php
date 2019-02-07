@@ -34,5 +34,13 @@ class Order {
 			return false;
 		}
 	}
+
+	public function get_all_orders() {
+
+		// query processing
+		$query = "SELECT a.order_id, b.shop_name, b.contact_name, b.contact_number, c.product_code, d.category_name, a.quantity FROM " . $this->table_name . " a JOIN users b ON a.user_id = b.user_id JOIN products c ON a.product_code = c.product_code JOIN categories d ON d.category_id = c.category_id ORDER BY a.order_id ASC";
+		$stmt = $this->conn->query($query);
+		return $stmt;
+	}
 }
 ?>
