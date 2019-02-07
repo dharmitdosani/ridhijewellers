@@ -45,6 +45,8 @@ if(!empty($data->category_name) && !empty($data->gross_weight) && !empty($data->
 
 		// product image addition code here
 
+		// notify customers code here
+
 	}
 }
 

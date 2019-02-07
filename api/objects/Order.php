@@ -42,5 +42,13 @@ class Order {
 		$stmt = $this->conn->query($query);
 		return $stmt;
 	}
+
+	public function delete_all_orders() {
+
+		// query processing 
+		$query = "TRUNCATE TABLE " . $this->table_name;
+		$stmt = $this->conn->query($query);
+		return $stmt;
+	}
 }
 ?>
