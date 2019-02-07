@@ -27,16 +27,6 @@ class Product {
 		$this->size = mysqli_real_escape_string($this->conn, htmlspecialchars($this->size));
 		$this->length = mysqli_real_escape_string($this->conn, htmlspecialchars($this->length));
 		$this->status = "active";
-		
-		// method of implementation changed by inserting a sub query into query
-		// query processing 
-		// $query = "SELECT category_id FROM categories WHERE category_name = ?";
-		// $stmt = $this->conn->prepare($query);
-		// $stmt->bind_param("s", $this->category_name);
-		// $stmt->execute();
-		// $result = $stmt->get_result();
-		// $row = $result->fetch_assoc();
-		// $this->category_id = mysqli_real_escape_string($this->conn, htmlspecialchars($row["category_id"]));
 
 		$query = "INSERT INTO " . $this->table_name . " (gross_weight, size, length, category_id, status) VALUES (?, ?, ?, (SELECT category_id FROM categories WHERE category_name = ?), ?)";
 		$stmt = $this->conn->prepare($query);

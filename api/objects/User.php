@@ -5,7 +5,7 @@ class User {
 	private $conn;
 	private $table_name = "users";
 
-	// user properties
+	// user table properties
 	public $user_id;
 	public $user_name;
 	public $user_password;
