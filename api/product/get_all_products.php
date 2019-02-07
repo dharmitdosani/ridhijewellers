@@ -1,4 +1,5 @@
 <?php
+
 // required headers
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -15,16 +16,16 @@ $db = $database->getConnection();
 
 $product = new Product($db);
 
-//query all categories
+// query all categories
 $stmt = $product->get_all_products();
 $num = $stmt->num_rows;
 
-//if the number of categories are more than one
+// if the number of categories are more than one
 if($num>0) {
 	$product_array = array();
 	$product_array["records"] = array();
 
-	//fetching products from the array
+	// fetching products from the array
 	while($row = $stmt->fetch_assoc()) {
 		extract($row);
 		$product_item = array(
@@ -42,7 +43,7 @@ if($num>0) {
 	// setting response code - 200 OK
 	http_response_code(200);
 
-	//show categories in json format
+	// show categories in json format
 	echo json_encode($product_array);
 }
 else {

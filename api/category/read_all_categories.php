@@ -1,4 +1,5 @@
 <?php
+
 // required headers
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -15,16 +16,16 @@ $db = $database->getConnection();
 
 $category = new Category($db);
 
-//query all categories
+// query all categories
 $stmt = $category->read_all_categories();
 $num = $stmt->num_rows;
 
-//if the number of categories are more than one
-if($num>0) {
+// if the number of categories are more than one
+if($num > 0) {
 	$categories_array = array();
 	$categories_array["records"] = array();
 	
-	//fetching categories from the array
+	// fetching categories from the array
 	while($row = $stmt->fetch_assoc()) {
 		extract($row);
 		$category_item = array(
@@ -37,7 +38,7 @@ if($num>0) {
 	// setting response code - 200 OK
 	http_response_code(200);
 	
-	//show categories in json format
+	// show categories in json format
 	echo json_encode($categories_array);
 }
 else {

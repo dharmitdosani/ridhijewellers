@@ -1,4 +1,5 @@
 <?php
+
 // required headers
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -20,7 +21,7 @@ $stmt = $order->get_all_orders();
 $num = $stmt->num_rows;
 
 // if the number of orders are more than one
-if($num>0) {
+if($num > 0) {
 	$orders_array = array();
 	$orders_array["records"] = array();
 

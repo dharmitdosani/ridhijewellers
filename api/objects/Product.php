@@ -1,5 +1,6 @@
 <?php
 class Product {
+
 	// database connection and table name 
 	private $conn;
 	private $table_name = "products";
@@ -28,9 +29,11 @@ class Product {
 		$this->length = mysqli_real_escape_string($this->conn, htmlspecialchars($this->length));
 		$this->status = "active";
 
+		// query processing
 		$query = "INSERT INTO " . $this->table_name . " (gross_weight, size, length, category_id, status) VALUES (?, ?, ?, (SELECT category_id FROM categories WHERE category_name = ?), ?)";
 		$stmt = $this->conn->prepare($query);
 		$stmt->bind_param("dddss", $this->gross_weight, $this->size, $this->length, $this->category_name, $this->status);
+		
 		if($stmt->execute()) {
 			return $this->conn->insert_id;
 		}
@@ -50,6 +53,7 @@ class Product {
 		$query = "UPDATE " . $this->table_name . " SET status = ? WHERE product_code = ?";
 		$stmt = $this->conn->prepare($query);
 		$stmt->bind_param("si", $this->status, $this->product_code);
+		
 		if($stmt->execute() && $stmt->affected_rows == 1) {
 			return true;
 		}
@@ -69,6 +73,7 @@ class Product {
 		$query = "UPDATE " . $this->table_name . " SET status = ? WHERE product_code = ?";
 		$stmt = $this->conn->prepare($query);
 		$stmt->bind_param("si", $this->status, $this->product_code);
+		
 		if($stmt->execute() && $stmt->affected_rows == 1) {
 			return true;
 		}
@@ -91,6 +96,7 @@ class Product {
 		$query = "UPDATE " . $this->table_name . " SET gross_weight = ?, size = ?, length = ?, category_id = (SELECT category_id FROM categories WHERE category_name = ?) WHERE product_code = ?";
 		$stmt = $this->conn->prepare($query);
 		$stmt->bind_param("dddsi", $this->gross_weight, $this->size, $this->length, $this->category_name, $this->product_code);
+		
 		if($stmt->execute() && $stmt->affected_rows == 1) {
 			return true;
 		}

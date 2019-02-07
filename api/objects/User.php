@@ -25,6 +25,7 @@ class User {
 		
 		// making the variables safe for the query
 		$this->user_name = mysqli_real_escape_string($this->conn, htmlspecialchars($this->user_name));
+		
 		// check for what to do for password encryption
 		$this->user_password = mysqli_real_escape_string($this->conn, htmlspecialchars($this->user_password));
 		$this->shop_name = mysqli_real_escape_string($this->conn, htmlspecialchars($this->shop_name));
@@ -53,13 +54,15 @@ class User {
 		$num = $stmt->num_rows;
 		
 		// if the number of users are more than one
-		if($num>0) {
+		if($num > 0) {
 			$user_name_array = array();
 			
 			// fetching usernames from the array
 			while($row = $stmt->fetch_assoc()) {
 				array_push($user_name_array, strtolower($row["user_name"]));
 			}
+
+			// if the username is already existing in the user array then return false
 			if(in_array($user_name, $user_name_array)) {
 				return false;
 			}
@@ -89,11 +92,13 @@ class User {
 		}
 	}
 
-	// deactivating user 
+	// deactivating the user from the admin console
 	public function deactivate_user() {
 		
-		// deactivating the user from the admin console
+		// making variables safe for query processing
 		$this->user_name = mysqli_real_escape_string($this->conn, htmlspecialchars($this->user_name));
+
+		// query processing
 		$query = "UPDATE " . $this->table_name . " SET status = 'not_verified' WHERE user_name = ?";
 		$stmt = $this->conn->prepare($query);
 		$stmt->bind_param("s",$this->user_name);
@@ -109,7 +114,7 @@ class User {
 	// get all users
 	public function get_all_users() {
 		
-		//query processing
+		// query processing
 		$query = "SELECT * FROM " . $this->table_name;
 		$stmt = $this->conn->query($query);
 		return $stmt;
@@ -118,7 +123,7 @@ class User {
 	// edit user profile
 	public function edit_profile() {
 		
-		// edit user profile 
+		// making the variables safe for query processing 
 		$this->user_name = mysqli_real_escape_string($this->conn, htmlspecialchars($this->user_name));
 		$this->contact_name = mysqli_real_escape_string($this->conn, htmlspecialchars($this->contact_name));
 		$this->contact_number = mysqli_real_escape_string($this->conn, htmlspecialchars($this->contact_number));
@@ -140,10 +145,11 @@ class User {
 	// authenticate user
 	public function authenticate_user() {
 		
-		// taking username and password and authenticating the user
+		// taking username and password and authenticating the user, making the variables safe for query processing
 		$this->user_name = mysqli_real_escape_string($this->conn, htmlspecialchars($this->user_name));
 		$this->user_password = mysqli_real_escape_string($this->conn, htmlspecialchars($this->user_password));
 
+		// query processing
 		$query = "SELECT user_password FROM " . $this->table_name . " WHERE user_name = ?";
 		$stmt = $this->conn->prepare($query);
 		$stmt->bind_param("s",$this->user_name);
@@ -154,10 +160,11 @@ class User {
 	// resetting password
 	public function reset_password() {
 		
-		// taking the username whose password needs to be resetted
+		// taking the username whose password needs to be resetted, making the variable safe for query processing
 		$this->user_name = mysqli_real_escape_string($this->conn, htmlspecialchars($this->user_name));
 		$new_password = "abcd@1234";
 
+		// query processing
 		$query = "UPDATE " . $this->table_name . " SET user_password = ? WHERE user_name = ?";
 		$stmt = $this->conn->prepare($query);
 		$stmt->bind_param("ss", $new_password, $this->user_name);
@@ -173,10 +180,11 @@ class User {
 	// change password
 	public function change_password() {
 
-		// taking the user name old password and new password
+		// taking the user name old password and new password, making the variable safe for query processing
 		$this->user_name = mysqli_real_escape_string($this->conn, htmlspecialchars($this->user_name));
 		$this->user_password = mysqli_real_escape_string($this->conn, htmlspecialchars($this->user_password));
 
+		// query processing
 		$query = "UPDATE " . $this->table_name . " SET user_password = ? WHERE user_name = ?";
 		$stmt = $this->conn->prepare($query);
 		$stmt->bind_param("ss", $this->user_password, $this->user_name);

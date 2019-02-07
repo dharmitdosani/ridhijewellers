@@ -1,10 +1,11 @@
 <?php
 class Order {
+
 	// database connection and table name 
 	private $conn;
 	private $table_name = "orders";
 
-	// product table properties
+	// order table properties
 	public $order_id;
 	public $product_code;
 	public $user_id;
@@ -27,6 +28,7 @@ class Order {
 		$query = "INSERT INTO " . $this->table_name . " (product_code, user_id, quantity) VALUES (?, ?, ?)";
 		$stmt = $this->conn->prepare($query);
 		$stmt->bind_param("iii", $this->product_code, $this->user_id, $this->quantity);
+		
 		if($stmt->execute()) {
 			return true;
 		}
@@ -35,6 +37,7 @@ class Order {
 		}
 	}
 
+	// getting all orders
 	public function get_all_orders() {
 
 		// query processing
@@ -43,6 +46,7 @@ class Order {
 		return $stmt;
 	}
 
+	// deleting all orders
 	public function delete_all_orders() {
 
 		// query processing 

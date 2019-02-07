@@ -1,4 +1,5 @@
 <?php
+
 // required headers
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -55,7 +56,7 @@ if(!empty($data->user_name) && !empty($data->user_password) && !empty($data->sho
 	}
 }
 
-//tell the user that the data is incomplete
+// tell the user that the data is incomplete
 else {
 
 	// set response code to 400 bad request and tell the user

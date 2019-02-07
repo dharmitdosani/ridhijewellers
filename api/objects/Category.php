@@ -1,5 +1,6 @@
 <?php
 class Category {
+	
 	// connection to the database and table name
 	private $conn;
 	private $table_name = "categories";	
@@ -15,6 +16,7 @@ class Category {
 
 	// insert one category into the table
 	public function add_category() {
+		
 		// making the category name safe for the query
 		$this->category_name = mysqli_real_escape_string($this->conn, htmlspecialchars($this->category_name));
 

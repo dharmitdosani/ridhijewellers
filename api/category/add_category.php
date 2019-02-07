@@ -1,4 +1,5 @@
 <?php
+
 // required headers
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -23,6 +24,7 @@ if(!empty($data->category_name)) {
 	
 	// set data into the category variables
 	$category->category_name = $data->category_name;
+
 	if($category->add_category()) {
 		
 		// set response code 201 created and tell the user

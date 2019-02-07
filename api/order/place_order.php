@@ -1,4 +1,5 @@
 <?php
+
 // required headers
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -21,6 +22,7 @@ $data = json_decode(file_get_contents("php://input"));
 // checking if data exists
 if(!empty($data->product_code) && !empty($data->user_id) && !empty($data->quantity)) {
 
+	// setting data into variables
 	$order->product_code = $data->product_code;
 	$order->user_id = $data->user_id;
 	$order->quantity = $data->quantity;
@@ -39,7 +41,7 @@ if(!empty($data->product_code) && !empty($data->user_id) && !empty($data->quanti
 	}
 }
 
-//tell the user that the data is incomplete
+// tell the user that the data is incomplete
 else {
 
 	// set response code to 400 bad request and tell the user

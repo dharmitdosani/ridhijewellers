@@ -15,16 +15,16 @@ $db = $database->getConnection();
 
 $user = new User($db);
 
-//query all categories
+// query all categories
 $stmt = $user->get_all_users();
 $num = $stmt->num_rows;
 
-//if the number of categories are more than one
+// if the number of categories are more than one
 if($num>0) {
 	$users_array = array();
 	$users_array["records"] = array();
 
-	//fetching categories from the array
+	// fetching categories from the array
 	while($row = $stmt->fetch_assoc()) {
 		extract($row);
 		$user_item = array(
@@ -42,7 +42,7 @@ if($num>0) {
 	// setting response code - 200 OK
 	http_response_code(200);
 
-	//show categories in json format
+	// show categories in json format
 	echo json_encode($users_array);
 }
 else {
