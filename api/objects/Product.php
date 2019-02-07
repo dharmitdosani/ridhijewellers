@@ -108,5 +108,14 @@ class Product {
 			return false;
 		}	
 	}
+
+	// get all products from catalog
+	public function get_all_products() {
+
+		// query processing
+		$query = "SELECT a.product_code, a.gross_weight, a.size, a.length, b.category_name, a.melting, a.status FROM " . $this->table_name . " a JOIN categories b ON a.category_id = b.category_id ORDER BY a.product_code ASC";
+		$stmt = $this->conn->query($query);
+		return $stmt;
+	}
 }
 ?>
